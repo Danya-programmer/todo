@@ -1,41 +1,28 @@
 import './App.css';
 import React from 'react';
-import axios from 'axios';
-import  { Component } from 'react';
+import {Server} from "./server";
+
+import { useEffect } from "react";
+import Aos from 'aos';
+import 'aos/dist/aos.css';
+//
 
 
-class App extends Component {
-    state = {
-        todos: []
-    };
+export const App = () => {
+    const data = Server().ControllerServer.todo
+    useEffect(() => {
+        Aos.init({duration: 2000})
+    })
+    return (
+        <>
 
-    componentDidMount() {
-    this.getTodos();
-    }
+            {data.map(item =>
+                <h1 data-aos='fade-down'
+                    style={{margin:'50px', width:'1400px', height:'800px', background: "grey", color:'white', textAlign:'center'}}>
+                    {item.title}
+                </h1>)}
 
-    getTodos() {
-        axios
-            .get('http://127.0.0.1:8000/api/')
-            .then(res => {
-            this.setState({ todos: res.data });
-        })
-        .catch(err => {
-            console.log(err);
-        });
-    }
-    render() {
-        return (
-            <div>
+        </>
 
-            {this.state.todos.map(item => (
-            <div key={item.id}>
-            <h1>{item.title}</h1>
-            <span>{item.body}</span>
-            </div>
-            ))}
-            </div>
-        );
-    }
+    )
 }
-
-export default App;
