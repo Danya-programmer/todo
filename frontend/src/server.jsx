@@ -5,10 +5,11 @@ export const Server =() => {
     const [todo, setTodo] = React.useState([])
     console.log(todo)
 
-    useEffect(() => {
-      axios ({
+    useEffect(() =>  {
+
+       axios  ( {
           method: "GET",
-          url:"http://127.0.0.1:8000/api/",
+          url:"http://127.0.0.1:8000/api",
         }).then((response)=>{
             setTodo(response.data)
 
